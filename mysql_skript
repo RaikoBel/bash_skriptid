@@ -1,0 +1,20 @@
+#!/bin/bash
+#Skript mysql paigaldamiseks
+
+MYSQL=$(dpkg-query -W -f= '${Status}' mysql-server 2>/dev/null | grep -c 'ok installed')
+if [ $MYSQL -eq 0 ]; then
+	echo "Paigaldame Mysql ja vajalikud lisad"
+	apt install mysql-server
+	#võimalus kasutada mysql käske ilma kasutaja ja paroolita
+	touch $HOME/.my.conf
+	echo "[client]" >> $HOME/.my.cnf
+	echo "host = localhost" >> $HOME/.my.cnf
+	echo "user = root" >> $HOME/.my.cnf
+	echo "password = qwerty" >> $HOME/.my.cnf
+#kui  muutuja väärtus  on 1
+elif [ $MYSQL -eq 1 ]; then
+	echo "Mysql on juba paigaldatud"
+	mysql
+fi
+
+#skripti lopp
