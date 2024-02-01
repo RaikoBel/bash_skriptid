@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#Skript, mis kasutab parameetritena kahte faili, ühes kasutajad teises paroolid
+
+if [ "$#" -ne 2 ]; then
+    echo "Kasutusjuhend: $0 kasutajad paroolid"
+else
+    kasutajad=$1
+    paroolid=$2
+
+    if [ -f "$kasutajad" -a -r "$kasutajad" ] && [ -f "$paroolid" -a -r "$paroolid" ]; then
+        echo "Failid on korras"
+
+        while IFS= read -r nimi && IFS= read -r parool; do
+            # Lisa kasutaja ja parool
+            sh kasutajad "$kasutajad" || sh paroolid "$paroolid"
+        done < "$kasutajad" 3< "$paroolid"
+
+    else
+        echo "Probleem failidega"
+    fi
+fi
