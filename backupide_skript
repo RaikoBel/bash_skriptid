@@ -1,0 +1,35 @@
+/!bin/bash
+
+#skript backupi-de tegemiseks
+echo -n "Siseta kataloogi nimi koos path-iga, millesse soovid backupid teha:"
+read lahtekaust
+echo -n "Sisesta kataloog, kuhu soovid backup-id salvestada:"
+mkdir 'echo $sihtkaust'
+sleep 3 
+ls -ld 'echo $sihtkaust'
+sleep 3
+echo 'praegune asukoht:'
+echo 'pwd'
+cd 'echo $lahtekaust'
+echo $lahtekaust
+for filename in $(ls $lahtekaust); do
+
+	if [ -f $failinimi ]; then
+		result="Faili nimi on tavaline fail"
+		echo "$tulemus"
+	else
+		if [ -d $failinimi ]; then
+		result="$failinimi on directory, teen backupi"
+		echo "$tulemus"
+		kuupaev='date +%d. %m. %Y'
+		echo $kuupaev
+		echo "$lahtekaust$failinimi/"
+		tar -c -f $failinimi.$kuupaev.tar $failinimi/
+		gzip $failinimi.$kuupaev.tar
+		mv $failinimi.$kuupaev.tar.gz $sihtkaust
+		sleep 3
+		echo "Backup tehtud $failinimi kohta $sihtkaust"
+		ls -l 'echo $sihtkaust$filename.$kuupaev.tar.gz'
+		fi
+	fi
+done
